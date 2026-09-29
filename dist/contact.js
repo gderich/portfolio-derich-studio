@@ -12,7 +12,7 @@
         <span class="brief-brand">derich<span>studio.</span></span>
         <span class="eyebrow">O começo de algo bom</span>
         <h2 id="brief-title">Me conte o que seu projeto precisa.</h2>
-        <p>Três respostas rápidas para começarmos uma conversa que já faça sentido para você.</p>
+        <p>Três respostas rápidas para entender sua ideia e começar uma conversa que faça sentido para você.</p>
         <span class="brief-decoration" aria-hidden="true">↗</span>
       </div>
       <div class="brief-content">
@@ -23,20 +23,14 @@
             <input id="brief-name" name="name" type="text" autocomplete="name" placeholder="Seu nome" maxlength="60" required>
             <input id="brief-business" name="business" type="text" autocomplete="organization" placeholder="Nome ou tipo de negócio" maxlength="80" required>
           </div>
-          <fieldset>
-            <legend>02 / O que você precisa?</legend>
-            <div class="brief-options">
-              <label><input type="radio" name="service" value="Um site profissional" required><span>Um site</span></label>
-              <label><input type="radio" name="service" value="Site com agendamento"><span>Agendamento</span></label>
-              <label><input type="radio" name="service" value="Ainda quero entender a melhor solução"><span>Ainda não sei</span></label>
-            </div>
-          </fieldset>
-          <label for="brief-challenge">03 / O que você quer melhorar hoje?</label>
-          <textarea id="brief-challenge" name="challenge" rows="3" maxlength="450" placeholder="Ex.: perco clientes porque meus serviços e horários estão espalhados nas redes sociais." required></textarea>
+          <label for="brief-idea">02 / O que você imagina criar?</label>
+          <textarea id="brief-idea" name="idea" rows="3" maxlength="450" placeholder="Pode ser uma ideia pronta ou apenas o começo dela." required></textarea>
+          <label for="brief-challenge">03 / Que dificuldade isso resolveria?</label>
+          <textarea id="brief-challenge" name="challenge" rows="3" maxlength="450" placeholder="Conte o que hoje atrapalha você ou as pessoas que vão usar." required></textarea>
           <button class="pill brief-submit" type="submit">Continuar no WhatsApp <span aria-hidden="true">↗</span></button>
           <p class="brief-note">As respostas entram na mensagem do WhatsApp. Você pode revisá-la antes de enviar.</p>
         </form>
-        <a class="brief-direct" href="https://wa.me/${number}?text=${encodeURIComponent('Olá, Derich! Vi seu portfólio e gostaria de conversar sobre um site.')}">Prefiro conversar direto, sem preencher ↗</a>
+        <a class="brief-direct" href="https://wa.me/${number}?text=${encodeURIComponent('Olá, Derich! Vi seu portfólio e gostaria de conversar sobre uma ideia.')}">Prefiro conversar direto, sem preencher ↗</a>
       </div>
     </div>`;
   document.body.append(dialog);
@@ -52,7 +46,7 @@
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     const data = new FormData(form);
-    const message = `Olá, Derich! Vi seu portfólio e gostaria de conversar sobre um projeto.\n\n*Nome:* ${data.get('name').trim()}\n*Negócio:* ${data.get('business').trim()}\n*Preciso de:* ${data.get('service')}\n*Quero melhorar:* ${data.get('challenge').trim()}`;
+    const message = `Olá, Derich! Vi seu portfólio e gostaria de conversar sobre um projeto.\n\n*Nome:* ${data.get('name').trim()}\n*Negócio:* ${data.get('business').trim()}\n*Ideia:* ${data.get('idea').trim()}\n*Dificuldade que quero resolver:* ${data.get('challenge').trim()}`;
     window.location.assign(`https://wa.me/${number}?text=${encodeURIComponent(message)}`);
   });
 })();
