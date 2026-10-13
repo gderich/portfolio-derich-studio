@@ -1,6 +1,7 @@
 (() => {
-  const number = '5585996946551';
-  const links = document.querySelectorAll('a[href^="https://wa.me/5585996946551"]');
+  const links = document.querySelectorAll('a[href^="https://wa.me/"]');
+  const number = links[0]?.href.match(/wa\.me\/(\d+)/)?.[1];
+  if (!number) return;
   if (!links.length || typeof HTMLDialogElement === 'undefined' || !('showModal' in HTMLDialogElement.prototype)) return;
 
   const dialog = document.createElement('dialog');
@@ -20,8 +21,8 @@
         <form id="project-brief">
           <label for="brief-name">01 / Seu nome e seu negócio</label>
           <div class="brief-name-row">
-            <input id="brief-name" name="name" type="text" autocomplete="name" placeholder="Seu nome" maxlength="60" required>
-            <input id="brief-business" name="business" type="text" autocomplete="organization" placeholder="Nome ou tipo de negócio" maxlength="80" required>
+            <input id="brief-name" name="name" type="text" autocomplete="name" placeholder="Seu nome" aria-label="Seu nome" maxlength="60" required>
+            <input id="brief-business" name="business" type="text" autocomplete="organization" placeholder="Nome ou tipo de negócio" aria-label="Nome ou tipo de negócio" maxlength="80" required>
           </div>
           <label for="brief-idea">02 / O que você imagina criar?</label>
           <textarea id="brief-idea" name="idea" rows="3" maxlength="450" placeholder="Pode ser uma ideia pronta ou apenas o começo dela." required></textarea>

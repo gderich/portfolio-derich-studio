@@ -8,18 +8,22 @@
   if (!reduced.matches && phrase) {
     const lines = ["Para ser encontrado.", "Para ser entendido.", "Para facilitar o próximo passo."];
     let index = 0;
-    window.setInterval(() => {
+    // Percorre as frases uma única vez e para na última (WCAG 2.2.2: sem movimento contínuo).
+    const timer = window.setInterval(() => {
       if (document.hidden || reduced.matches) return;
       phrase.classList.add("is-changing");
       window.setTimeout(() => {
         index = (index + 1) % lines.length;
         phrase.textContent = lines[index];
+        if (index === lines.length - 1) window.clearInterval(timer);
         phrase.classList.remove("is-changing");
       }, 240);
     }, 3300);
   }
 
   // Adapted from the Velaris simplex-noise shader supplied for this project.
+  // Função snoise (simplex noise 2D): Ian McEwan, Ashima Arts — Licença MIT.
+  // Copyright (C) 2011 Ashima Arts; ver THIRD_PARTY_NOTICES.md. https://github.com/ashima/webgl-noise
   // The CSS background remains visible if WebGL is unavailable or motion is reduced.
   if (reduced.matches) return;
   const gl = canvas.getContext("webgl", { alpha: false, antialias: false, powerPreference: "low-power" });
