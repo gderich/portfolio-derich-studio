@@ -190,10 +190,9 @@
 @media(max-width:680px){.brief-dialog{width:calc(100% - 20px);max-height:calc(100dvh - 20px);border-radius:18px}.brief-layout{display:block;min-height:0}.brief-intro{padding:23px 24px 22px}.brief-intro .eyebrow{margin-top:24px}.brief-intro h2{font-size:28px;margin:8px 0}.brief-intro p{font-size:13px;max-width:none}.brief-decoration{display:none}.brief-content{padding:48px 24px 25px}.brief-close{right:19px;top:11px}.brief-name-row{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.brief-dialog::backdrop{backdrop-filter:none}}
 
-/* Keep home anchor sections below the sticky navigation (including its border). */
-.home-page #projetos,
-.home-page #servicos { scroll-margin-top: 77px; }
+/* Shared anchor offset: sticky navigation + border + 16px breathing room.
+   Applies to in-page links and incoming URL fragments on every page. */
+html { scroll-padding-top: 93px; }
 @media (max-width: 620px) {
-  .home-page #projetos,
-  .home-page #servicos { scroll-margin-top: 66px; }
+  html { scroll-padding-top: 82px; }
 }
