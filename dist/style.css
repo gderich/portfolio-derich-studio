@@ -199,3 +199,20 @@ html { scroll-padding-top: 77px; }
 .skip{position:absolute;left:12px;top:-60px;z-index:100;background:#17283c;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;transition:top .15s}
 .skip:focus{top:12px;outline:3px solid #a8c9ef;outline-offset:2px}
 main:focus{outline:none}
+
+/* Dois caminhos (home) */
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:8px 0 34px}
+.path{border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:30px;display:flex;flex-direction:column;align-items:flex-start}
+.path h3{font-size:1.45rem;margin:12px 0 10px}
+.path p{color:var(--muted);line-height:1.65;margin:0 0 12px}
+.path .path-price{color:var(--ink);margin-top:auto;padding-top:10px}
+.path .path-price strong{font-family:Manrope,system-ui,sans-serif;font-size:1.7rem;letter-spacing:-.04em}
+.path .path-price span{color:var(--muted);font-size:.92rem}
+.path .path-note{font-size:.9rem;margin-bottom:20px}
+/* Quem sou eu (home) */
+.about{border-top:1px solid var(--line)}
+.about-grid{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:56px;align-items:center}
+.about-photo{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:24px;border:1px solid var(--line);display:block}
+.about p{font-size:1.15rem;line-height:1.75;color:var(--muted);max-width:640px}
+.home-page .about h2{color:#f5f7ff}
+@media(max-width:850px){.paths{grid-template-columns:1fr}.about-grid{grid-template-columns:1fr;gap:28px}.about-photo{max-width:260px}}

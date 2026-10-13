@@ -46,3 +46,20 @@ Veja `THIRD_PARTY_NOTICES.md` (simplex noise do hero e fontes).
 ## Contato
 
 Gabriel Derich Freitas, [gabrielderich1@gmail.com](mailto:gabrielderich1@gmail.com)
+
+
+## Páginas de demonstração
+`dist/demo-nutricao.html` e `dist/demo-doceria.html` são exemplos do pacote de R$ 750 com conteúdo fictício. Usam `noindex` e não estão no `sitemap.xml`. O estilo está em `dist/demo.css`. Para criar uma nova demo, copie uma delas e troque textos e as variáveis de cor `--d-*`.
+
+## Seção "Quem sou eu"
+Fica na home (`#sobre`), com a foto `images/derich-retrato.webp` (800 x 800). Para trocar a foto, substitua o arquivo e rode `tools/optimize_images.py` se partir de um PNG/JPG.
+
+## Depoimento da Caxtros (ainda não publicado)
+Só publique com texto real e autorização por escrito da proprietária. Quando tiver, adicione na home, antes da seção `#sobre`:
+
+```html
+<section class="section" id="depoimento"><div class="wrap"><blockquote><p>TEXTO REAL</p><footer>Nome, Caxtros Barber</footer></blockquote></div></section>
+```
+
+## Prints da Estaca
+`estaca-home.webp` e `estaca-revista.webp` têm nomes e rostos de pessoas borrados. Se trocar essas imagens, repita o procedimento.
