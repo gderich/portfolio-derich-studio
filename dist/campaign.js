@@ -4,7 +4,7 @@
     id: 'sites-outubro-2026', enabled: true,
     startsAt: '2026-10-14T00:00:00-03:00',
     endsAt: '2026-10-19T00:00:00-03:00',
-    regularPrice: 750, price: 650
+    regularPrice: 1500, price: 750
   });
   const money = value => new Intl.NumberFormat('pt-BR', {
     style: 'currency', currency: 'BRL', maximumFractionDigits: 0
