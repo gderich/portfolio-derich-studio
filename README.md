@@ -52,7 +52,7 @@ Gabriel Derich Freitas, [gabrielderich1@gmail.com](mailto:gabrielderich1@gmail.c
 `dist/demo-nutricao.html` e `dist/demo-doceria.html` são exemplos do pacote de R$ 750 com conteúdo fictício. Usam `noindex` e não estão no `sitemap.xml`. O estilo está em `dist/demo.css`. Para criar uma nova demo, copie uma delas e troque textos e as variáveis de cor `--d-*`.
 
 ## Seção "Quem sou eu"
-Fica na home (`#sobre`), com a foto `images/derich-retrato.webp` (800 x 800). Para trocar a foto, substitua o arquivo e rode `tools/optimize_images.py` se partir de um PNG/JPG.
+Fica na home (`#sobre`), com apresentação do fundador e a foto `images/derich-fundador.webp` (800 × 1000). O retrato anterior permanece em `images/derich-retrato.webp`. Para trocar a foto, atualize o caminho no HTML e mantenha as dimensões declaradas de acordo com o arquivo.
 
 ## Depoimento da Caxtros (ainda não publicado)
 Só publique com texto real e autorização por escrito da proprietária. Quando tiver, adicione na home, antes da seção `#sobre`:
@@ -63,3 +63,11 @@ Só publique com texto real e autorização por escrito da proprietária. Quando
 
 ## Prints da Estaca
 `estaca-home.webp` e `estaca-revista.webp` têm nomes e rostos de pessoas borrados. Se trocar essas imagens, repita o procedimento.
+
+## Campanha de outubro de 2026
+
+Configuração central em `dist/campaign.js`: preço regular R$ 750; oferta R$ 650; início 14/10/2026 e encerramento absoluto em 19/10/2026 às 00h, UTC-03:00. O aviso e o desconto aparecem apenas dentro desse intervalo; preços e formulário voltam ao valor regular automaticamente. O contador nunca reinicia por visitante. Solicitações devem ser enviadas pelo WhatsApp dentro do prazo; escopo e contratação são confirmados na proposta. Sem JavaScript, permanece o preço regular, sem promessa de desconto. Para outra campanha, altere configuração e textos/datas nos dois HTML; não reutilize prazos vencidos.
+
+O aviso abre um diálogo apenas ao clicar. A campanha usa CSS/JS locais, preserva a CSP e transporta UTMs da home para a oferta. O formulário recalcula o preço ao enviar, inclusive se a aba ficou aberta após o fim da campanha.
+
+O retrato atual da seção `#sobre` é `images/derich-fundador.webp` (800 × 1000), gerado a partir da foto anterior com pose em três quartos e luz lateral. A foto anterior foi preservada.

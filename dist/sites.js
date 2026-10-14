@@ -20,7 +20,7 @@ const message = ['Olá, Derich! Vi a página de sites e quero uma proposta.',
 'Negócio: ' + String(data.get('business')).trim(),
 'Cidade: ' + String(data.get('city')).trim(),
 'Perfil: ' + (String(data.get('profile')).trim() || 'Não informado'),
-'Interesse: ' + data.get('need'),
+'Interesse: ' + (form.elements.namedItem('need').selectedIndex === 0 && window.derichOffer ? window.derichOffer.description() : data.get('need')),
 'Origem: Página de oferta' + (campaign ? ' | ' + campaign : '')].join('\n');
 document.getElementById('sale-status').textContent = 'Abrindo o WhatsApp. Revise a mensagem e toque em enviar para iniciar a conversa.';
 location.assign('https://wa.me/' + number + '?text=' + encodeURIComponent(message));
