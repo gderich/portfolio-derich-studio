@@ -51,7 +51,7 @@
         <small>Site de apresentação · até 6 seções</small>
       </div>
       <div class="campaign-follower-action">
-        <span>Termina em <time data-countdown datetime="${campaign.endsAt}"></time></span>
+        <span class="campaign-follower-countdown">Termina em <time data-countdown datetime="${campaign.endsAt}"></time></span>
         <a class="pill" href="${location.pathname.includes('sites')?'#proposta':'sites.html#proposta'}">Quero aproveitar ↗</a>
       </div>`;
     document.body.appendChild(follower);
@@ -174,6 +174,16 @@
     });
   }
 
+  function updateNoticeCopy(){
+    const noticeCopy=notice?.querySelector('span');
+    if(!noticeCopy||!active())return;
+    if(window.innerWidth<=620){
+      noticeCopy.innerHTML=`<b>50% OFF</b> · ${money(campaign.price)} <span class="campaign-notice-countdown">· <time data-countdown datetime="${campaign.endsAt}"></time></span>`;
+    }else{
+      noticeCopy.innerHTML=`Site profissional com <b>50% OFF</b>: de <s>${money(campaign.regularPrice)}</s> por <b>${money(campaign.price)}</b> até 18/10. <span class="campaign-notice-countdown"><time data-countdown datetime="${campaign.endsAt}"></time></span>`;
+    }
+  }
+
   function render(){
     const isActive=active();
     if(previousState!==isActive){
@@ -181,8 +191,7 @@
       document.querySelectorAll('[data-campaign-only]').forEach(el=>{el.hidden=!isActive;});
       document.querySelectorAll('[data-regular-price]').forEach(el=>{el.textContent=money(campaign.regularPrice);});
       document.querySelectorAll('[data-campaign-saving]').forEach(el=>{el.textContent=money(campaign.regularPrice-campaign.price);});
-      const noticeCopy=notice?.querySelector('span');
-      if(noticeCopy&&isActive)noticeCopy.innerHTML=`Site profissional com <b>50% OFF</b>: de <s>${money(campaign.regularPrice)}</s> por <b>${money(campaign.price)}</b> até 18/10.`;
+      if(isActive)updateNoticeCopy();
       bindNoticeOpen();
       const option=document.querySelector('[data-site-option]'); if(option)option.value=option.textContent=window.derichOffer.description();
       const direct=document.querySelector('.sale-direct'); if(direct){const url=new URL(direct.href);url.searchParams.set('text','Olá, Derich! Quero uma proposta. '+window.derichOffer.description());direct.href=url.href;}
@@ -200,7 +209,7 @@
   document.addEventListener('visibilitychange',render);
   document.addEventListener('submit',render,true);
   window.addEventListener('scroll',updateFollowerVisibility,{passive:true});
-  window.addEventListener('resize',updateFollowerVisibility);
+  window.addEventListener('resize',()=>{updateNoticeCopy();render();updateFollowerVisibility();});
   dialog?.querySelector('[data-campaign-close]')?.addEventListener('click',()=>dialog.close());
   dialog?.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
   dialog?.addEventListener('close',updateFollowerVisibility);
