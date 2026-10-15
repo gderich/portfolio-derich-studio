@@ -29,6 +29,10 @@
       document.querySelectorAll('[data-campaign-only]').forEach(el => { el.hidden = !isActive; });
       document.querySelectorAll('[data-regular-price]').forEach(el => { el.textContent = money(campaign.regularPrice); });
       document.querySelectorAll('[data-campaign-saving]').forEach(el => { el.textContent = money(campaign.regularPrice - campaign.price); });
+      const noticeCopy = notice?.querySelector('span');
+      if (noticeCopy && isActive) {
+        noticeCopy.innerHTML = `Site profissional com <b>50% OFF</b>: de <s>${money(campaign.regularPrice)}</s> por <b>${money(campaign.price)}</b> até 18/10.`;
+      }
       const option = document.querySelector('[data-site-option]');
       if (option) option.value = option.textContent = window.derichOffer.description();
       const direct = document.querySelector('.sale-direct');
