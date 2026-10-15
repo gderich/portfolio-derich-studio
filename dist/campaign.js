@@ -30,6 +30,7 @@
   let followerDismissed = false;
   let followerVisible = false;
   let morphing = false;
+  let engagedState = false;
 
   try { followerDismissed = sessionStorage.getItem(dismissKey) === '1'; } catch (_) {}
 
@@ -76,16 +77,20 @@
       follower.hidden = true;
       followerVisible = false;
       document.body.classList.remove('campaign-follower-visible');
-      if (isEngaged()) notice?.classList.add('campaign-notice-morphed');
+      if (engagedState) notice?.classList.add('campaign-notice-morphed');
     });
   }
 
-  function isEngaged() {
-    return window.scrollY > Math.max(420, window.innerHeight * 0.55);
+  function refreshEngagedState() {
+    const enterAt = Math.max(500, window.innerHeight * 0.62);
+    const leaveAt = Math.max(260, window.innerHeight * 0.36);
+    if (!engagedState && window.scrollY > enterAt) engagedState = true;
+    else if (engagedState && window.scrollY < leaveAt) engagedState = false;
+    return engagedState;
   }
 
   function shouldShowFollower() {
-    return active() && !followerDismissed && !dialog?.open && isEngaged();
+    return active() && !followerDismissed && !dialog?.open && refreshEngagedState();
   }
 
   function noticeRect() {
@@ -111,23 +116,63 @@
 
     const start = toFollower ? noticeRect() : follower.getBoundingClientRect();
     const end = toFollower ? follower.getBoundingClientRect() : noticeRect();
+
     const ghost = document.createElement('div');
     ghost.className = 'campaign-morph';
     ghost.innerHTML = '<span><b>50% OFF</b><small> Site profissional</small></span><strong>R$ 750</strong>';
     document.body.appendChild(ghost);
 
+    const endWidth = Math.max(1, end.width);
+    const endHeight = Math.max(1, end.height);
+    const scaleX = Math.max(.08, start.width / endWidth);
+    const scaleY = Math.max(.08, start.height / endHeight);
+    const dx = start.left - end.left;
+    const dy = start.top - end.top;
+
     Object.assign(ghost.style, {
-      left: `${start.left}px`, top: `${start.top}px`, width: `${start.width}px`, height: `${start.height}px`
+      left: `${end.left}px`,
+      top: `${end.top}px`,
+      width: `${endWidth}px`,
+      height: `${endHeight}px`,
+      transformOrigin: '0 0',
+      transform: `translate3d(${dx}px, ${dy}px, 0) scale(${scaleX}, ${scaleY})`
     });
 
+    if (toFollower) notice.style.visibility = 'hidden';
+    else follower.style.visibility = 'hidden';
+
+    const fromRadius = toFollower ? 0 : (window.innerWidth <= 620 ? 15 : 18);
+    const toRadius = toFollower ? (window.innerWidth <= 620 ? 15 : 18) : 0;
+
     const animation = ghost.animate([
-      { left: `${start.left}px`, top: `${start.top}px`, width: `${start.width}px`, height: `${start.height}px`, borderRadius: toFollower ? '0px' : '18px', opacity: .96 },
-      { left: `${end.left}px`, top: `${end.top}px`, width: `${end.width}px`, height: `${end.height}px`, borderRadius: toFollower ? '18px' : '0px', opacity: 1 }
-    ], { duration: 620, easing: 'cubic-bezier(.22,.85,.3,1)', fill: 'forwards' });
+      {
+        transform: `translate3d(${dx}px, ${dy}px, 0) scale(${scaleX}, ${scaleY})`,
+        borderRadius: `${fromRadius}px`,
+        opacity: .94,
+        offset: 0
+      },
+      {
+        transform: `translate3d(${dx * .34}px, ${dy * .34}px, 0) scale(${1 + (scaleX - 1) * .18}, ${1 + (scaleY - 1) * .18})`,
+        borderRadius: `${Math.max(fromRadius, toRadius, 20)}px`,
+        opacity: 1,
+        offset: .72
+      },
+      {
+        transform: 'translate3d(0,0,0) scale(1,1)',
+        borderRadius: `${toRadius}px`,
+        opacity: 1,
+        offset: 1
+      }
+    ], {
+      duration: 760,
+      easing: 'cubic-bezier(.16,1,.3,1)',
+      fill: 'forwards'
+    });
 
     animation.onfinish = () => {
       ghost.remove();
       if (toFollower) {
+        notice.style.visibility = '';
         notice.classList.add('campaign-notice-morphed');
         follower.style.visibility = '';
         follower.hidden = false;
@@ -143,7 +188,14 @@
       }
       morphing = false;
     };
-    animation.oncancel = animation.onfinish;
+
+    animation.oncancel = () => {
+      ghost.remove();
+      notice.style.visibility = '';
+      follower.style.visibility = '';
+      morphing = false;
+      updateFollowerVisibility();
+    };
     return true;
   }
 
@@ -151,14 +203,12 @@
     const follower = document.querySelector('[data-campaign-follower]');
     if (!follower || morphing) return;
 
-    const engaged = isEngaged();
-    const show = shouldShowFollower();
-
-    if (engaged) notice?.classList.add('campaign-notice-morphed');
-    else notice?.classList.remove('campaign-notice-morphed');
+    const engaged = refreshEngagedState();
+    const show = active() && !followerDismissed && !dialog?.open && engaged;
 
     if (show && !followerVisible) {
       if (!morphOffer(true)) {
+        notice?.classList.add('campaign-notice-morphed');
         follower.hidden = false;
         followerVisible = true;
         document.body.classList.add('campaign-follower-visible');
@@ -170,10 +220,14 @@
       if (!morphOffer(false)) {
         follower.hidden = true;
         followerVisible = false;
+        notice?.classList.remove('campaign-notice-morphed');
         document.body.classList.remove('campaign-follower-visible');
       }
       return;
     }
+
+    if (engaged) notice?.classList.add('campaign-notice-morphed');
+    else notice?.classList.remove('campaign-notice-morphed');
 
     if (!show && followerVisible && (followerDismissed || dialog?.open || !active())) {
       follower.hidden = true;
@@ -226,6 +280,7 @@
 
   enhanceHome();
   ensureFollower();
+  refreshEngagedState();
   render();
 
   setInterval(render, 1000);
