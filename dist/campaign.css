@@ -2,8 +2,15 @@
 [hidden]{display:none!important}
 .campaign-notice{position:sticky;top:76px;z-index:19;background:#111c34;border-bottom:1px solid #a6c9f426;color:#dbe8fc;transition:opacity .18s ease,visibility .18s ease}
 .campaign-notice.campaign-notice-morphed{opacity:0;visibility:hidden;pointer-events:none}
-.campaign-notice .wrap{display:flex;justify-content:center;align-items:center;gap:14px;min-height:44px;padding-block:8px;font-size:13px}
+.campaign-notice .wrap{display:flex;justify-content:center;align-items:center;gap:18px;min-height:44px;padding-block:8px;font-size:13px}
 .campaign-notice a{color:#bfd8ff;text-decoration:underline;text-underline-offset:4px;font-weight:700;white-space:nowrap}
+.campaign-core{display:flex;align-items:center;justify-content:space-between;gap:18px;min-width:0;width:100%}
+.campaign-notice .campaign-core{width:auto;gap:24px}
+.campaign-core-label{display:flex;align-items:center;gap:8px;min-width:0;white-space:nowrap}
+.campaign-core-label b{color:#a6c9f4;font-size:.78rem;letter-spacing:.06em}
+.campaign-core-label span{color:#c4d2e4;font-size:.78rem}
+.campaign-core-price{font:800 1.28rem Manrope,sans-serif;letter-spacing:-.04em;color:#fff;white-space:nowrap}
+
 .campaign-dialog{color:#edf3fb;background:#111c30;border:1px solid #4c6382;border-radius:20px;width:min(540px,calc(100% - 32px));max-height:calc(100dvh - 32px);padding:42px;overflow:auto;box-shadow:0 30px 100px #0007}
 .campaign-dialog::backdrop{background:#030817bc;backdrop-filter:blur(5px)}
 .campaign-dialog h2{font-size:clamp(1.8rem,6vw,2.5rem);max-width:400px;margin-top:18px}
@@ -21,32 +28,36 @@
 .price-anchor{display:block;margin-top:12px}
 .path .path-price [data-site-price]{font:inherit;color:inherit;letter-spacing:inherit}
 
-/* Conversion cues below the hero: concrete value, without turning the portfolio into an ad wall. */
+/* Conversion cues below the hero. */
 .conversion-points{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:18px;color:#b9c9de;font-size:.84rem}
 .conversion-points span{display:inline-flex;align-items:center;gap:8px}
 .conversion-points span::before{content:'✓';display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#a6c9f419;color:#cfe2fa;font-size:.7rem;font-weight:900;border:1px solid #a6c9f43d}
 
-/* Persistent offer: visible only after the visitor has engaged with the page. */
-.campaign-follower{position:fixed;z-index:35;right:24px;bottom:24px;width:min(390px,calc(100vw - 48px));display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;padding:17px 18px 16px;background:#111c30f2;color:#edf3fb;border:1px solid #587091;border-radius:18px;box-shadow:0 18px 60px #0007;backdrop-filter:blur(18px)}
-.campaign-follower-copy{min-width:0}
-.campaign-follower-kicker{display:block;color:#a6c9f4;font-size:.67rem;line-height:1.3;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
-.campaign-follower-price{display:flex;gap:10px;align-items:baseline;white-space:nowrap}
-.campaign-follower-price del{font-size:.82rem;color:#9fb1c9}
-.campaign-follower-price strong{font:800 1.55rem Manrope,sans-serif;letter-spacing:-.05em;color:#fff}
-.campaign-follower-copy small{display:block;color:#adbed4;font-size:.72rem;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.campaign-follower-action{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+/* Persistent offer. The same core survives the whole morph; details unfold only after landing. */
+.campaign-follower{position:fixed;z-index:35;right:24px;bottom:24px;width:min(390px,calc(100vw - 48px));padding:16px 18px;background:#111c30f2;color:#edf3fb;border:1px solid #587091;border-radius:18px;box-shadow:0 18px 60px #0007;backdrop-filter:blur(18px);overflow:hidden}
+.campaign-follower .campaign-core{padding-right:20px}
+.campaign-follower .campaign-core-label{gap:7px}
+.campaign-follower .campaign-core-label b{font-size:.72rem}
+.campaign-follower .campaign-core-label span{font-size:.76rem}
+.campaign-follower .campaign-core-price{font-size:1.55rem}
+.campaign-follower-details{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end;max-height:0;opacity:0;overflow:hidden;transform:translateY(-5px);margin-top:0;transition:max-height .28s cubic-bezier(.2,.8,.2,1),opacity .18s ease,transform .28s cubic-bezier(.2,.8,.2,1),margin-top .28s ease}
+.campaign-follower.is-expanded .campaign-follower-details{max-height:90px;opacity:1;transform:translateY(0);margin-top:11px}
+.campaign-follower-meta{min-width:0;display:flex;flex-direction:column;gap:4px}
+.campaign-follower-meta del{font-size:.76rem;color:#91a4bd}
+.campaign-follower-meta span{font-size:.72rem;color:#adbed4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.campaign-follower-action{display:flex;flex-direction:column;align-items:flex-end;gap:7px}
 .campaign-follower-action>span{color:#a9bbd2;font-size:.68rem;white-space:nowrap}
 .campaign-follower-action time{font-variant-numeric:tabular-nums;color:#d8e6fa}
 .campaign-follower .pill{min-height:38px;padding:8px 14px;font-size:.78rem;background:#e8eef7;color:#18304d;white-space:nowrap}
-.campaign-follower-close{position:absolute;right:7px;top:4px;width:28px;height:28px;border:0;background:transparent;color:#8da2bd;font-size:20px;line-height:1;cursor:pointer;border-radius:50%}
+.campaign-follower-close{position:absolute;right:7px;top:5px;width:28px;height:28px;border:0;background:transparent;color:#8da2bd;font-size:20px;line-height:1;cursor:pointer;border-radius:50%;z-index:2}
 .campaign-follower-close:hover{color:#fff;background:#ffffff0c}
 
-/* Morph bridge: the top strip physically appears to turn into the floating offer. */
-.campaign-morph{position:fixed;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 18px;background:#111c30f7;color:#edf3fb;border:1px solid #587091;box-shadow:0 18px 60px #0006;backdrop-filter:blur(18px);overflow:hidden;pointer-events:none;will-change:left,top,width,height,border-radius}
-.campaign-morph span{display:flex;align-items:center;gap:6px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.76rem;color:#dbe8fc}
-.campaign-morph span b{color:#a6c9f4;letter-spacing:.06em}
-.campaign-morph span small{font-size:.76rem;color:#b8c8dd}
-.campaign-morph strong{font:800 1.25rem Manrope,sans-serif;letter-spacing:-.04em;white-space:nowrap}
+/* Morph bridge uses the exact same core as the strip and card. */
+.campaign-morph{position:fixed;z-index:60;display:flex;align-items:center;padding:0 18px;background:#111c30f7;color:#edf3fb;border:1px solid #587091;box-shadow:0 18px 60px #0006;backdrop-filter:blur(18px);overflow:hidden;pointer-events:none;will-change:transform,border-radius;contain:paint}
+.campaign-morph .campaign-core{width:100%}
+.campaign-morph .campaign-core-label b{font-size:.72rem}
+.campaign-morph .campaign-core-label span{font-size:.76rem}
+.campaign-morph .campaign-core-price{font-size:1.4rem}
 
 .founder-figure{margin:0;min-width:0}
 .about-grid{grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:76px}
@@ -60,26 +71,35 @@
 @media(max-width:850px){.about-grid{gap:36px;grid-template-columns:minmax(0,280px) minmax(0,1fr)}.about-photo{max-width:none}}
 @media(max-width:620px){
   .campaign-notice{top:65px}
-  .campaign-notice .wrap{gap:10px;justify-content:space-between;font-size:11px}
+  .campaign-notice .wrap{gap:10px;justify-content:space-between;font-size:11px;padding-inline:12px}
+  .campaign-notice .campaign-core{gap:10px}
+  .campaign-notice .campaign-core-price{font-size:1.05rem}
+  .campaign-notice .campaign-core-label span{display:none}
+  .campaign-notice a{font-size:.68rem}
   .campaign-dialog{padding:38px 24px 26px}
   .campaign-price strong{font-size:2.8rem}
   .about-grid{grid-template-columns:1fr}
   .founder-figure{max-width:340px}
   .campaign-countdown time{font-size:1.45rem}
   .conversion-points{gap:8px 14px;font-size:.76rem}
-  .campaign-follower{left:10px;right:10px;bottom:10px;width:auto;border-radius:15px;padding:12px 38px 12px 14px;grid-template-columns:1fr auto;gap:10px}
-  .campaign-follower-kicker{font-size:.59rem;margin-bottom:2px}
-  .campaign-follower-price strong{font-size:1.25rem}
-  .campaign-follower-copy small,.campaign-follower-action>span{display:none}
-  .campaign-follower .pill{min-height:36px;padding:7px 11px;font-size:.72rem}
+  .campaign-follower{left:10px;right:10px;bottom:10px;width:auto;padding:12px 38px 12px 14px;border-radius:15px}
+  .campaign-follower .campaign-core{padding-right:0}
+  .campaign-follower .campaign-core-label span{display:none}
+  .campaign-follower .campaign-core-price{font-size:1.28rem}
+  .campaign-follower-details{grid-template-columns:1fr auto;gap:10px}
+  .campaign-follower.is-expanded .campaign-follower-details{max-height:70px;margin-top:8px}
+  .campaign-follower-meta span,.campaign-follower-action>span{display:none}
+  .campaign-follower-meta del{font-size:.7rem}
+  .campaign-follower .pill{min-height:35px;padding:7px 10px;font-size:.7rem}
   .campaign-follower-close{right:5px;top:50%;transform:translateY(-50%)}
   .campaign-morph{padding:0 12px}
-  .campaign-morph span small{display:none}
-  .campaign-morph strong{font-size:1.05rem}
+  .campaign-morph .campaign-core-label span{display:none}
+  .campaign-morph .campaign-core-price{font-size:1.1rem}
 }
 @media(prefers-reduced-motion:reduce){
   .campaign-notice{position:static;transition:none}
   .campaign-morph{display:none!important}
+  .campaign-follower-details{transition:none}
 }
 
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
