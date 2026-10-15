@@ -4,6 +4,7 @@
 .campaign-notice.campaign-notice-morphed{opacity:0;visibility:hidden;pointer-events:none}
 .campaign-notice .wrap{display:flex;justify-content:center;align-items:center;gap:14px;min-height:44px;padding-block:8px;font-size:13px}
 .campaign-notice a{color:#bfd8ff;text-decoration:underline;text-underline-offset:4px;font-weight:700;white-space:nowrap}
+.campaign-notice-countdown{display:inline-flex;align-items:center;margin-left:8px;padding:3px 8px;border:1px solid #a6c9f43a;border-radius:999px;background:#a6c9f412;color:#e7f1ff;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
 
 .campaign-dialog{color:#edf3fb;background:#111c30;border:1px solid #4c6382;border-radius:20px;width:min(540px,calc(100% - 32px));max-height:calc(100dvh - 32px);padding:42px;overflow:auto;box-shadow:0 30px 100px #0007}
 .campaign-dialog::backdrop{background:#030817bc;backdrop-filter:blur(5px)}
@@ -36,15 +37,16 @@
 .campaign-follower-price strong{font:800 1.55rem Manrope,sans-serif;letter-spacing:-.05em;color:#fff}
 .campaign-follower-copy small{display:block;color:#adbed4;font-size:.72rem;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .campaign-follower-action{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
-.campaign-follower-action>span{color:#a9bbd2;font-size:.68rem;white-space:nowrap}
-.campaign-follower-action time{font-variant-numeric:tabular-nums;color:#d8e6fa}
+.campaign-follower-action>span{color:#e7f1ff;font-size:.7rem;font-weight:800;white-space:nowrap;background:#a6c9f414;border:1px solid #a6c9f43f;border-radius:999px;padding:5px 9px;box-shadow:inset 0 0 0 1px #ffffff05}
+.campaign-follower-action time{font-variant-numeric:tabular-nums;color:#fff;font-weight:900;letter-spacing:.02em}
 .campaign-follower .pill{min-height:38px;padding:8px 14px;font-size:.78rem;background:#e8eef7;color:#18304d;white-space:nowrap}
 .campaign-follower-close{position:absolute;right:7px;top:4px;width:28px;height:28px;border:0;background:transparent;color:#8da2bd;font-size:20px;line-height:1;cursor:pointer;border-radius:50%}
 .campaign-follower-close:hover{color:#fff;background:#ffffff0c}
 
 .founder-figure{margin:0;min-width:0}
-.about-grid{grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:76px}
-.about-photo{aspect-ratio:4/5;border-radius:16px;object-position:center}
+.about-grid{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:76px;align-items:center}
+.about-photo{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:16px;border:1px solid var(--line);display:block;object-position:center}
+.founder-figure{margin:0;min-width:0}
 .founder-figure figcaption{padding-top:20px}
 .founder-figure figcaption strong{display:block;font:700 1.4rem Manrope,sans-serif;letter-spacing:-.04em}
 .founder-figure figcaption span{display:block;margin-top:6px;font-size:.9rem;color:#a6c9f4}
@@ -54,17 +56,22 @@
 @media(max-width:850px){.about-grid{gap:36px;grid-template-columns:minmax(0,280px) minmax(0,1fr)}.about-photo{max-width:none}}
 @media(max-width:620px){
   .campaign-notice{top:65px}
-  .campaign-notice .wrap{gap:10px;justify-content:space-between;font-size:11px}
+  .campaign-notice .wrap{gap:8px;justify-content:center;font-size:11px;flex-wrap:wrap;padding:7px 12px}
+  .campaign-notice .wrap>span{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap;text-align:center}
+  .campaign-notice-countdown{margin-left:2px;padding:3px 7px;font-size:.67rem}
+  .campaign-notice a{font-size:.7rem}
   .campaign-dialog{padding:38px 24px 26px}
   .campaign-price strong{font-size:2.8rem}
   .about-grid{grid-template-columns:1fr}
   .founder-figure{max-width:340px}
   .campaign-countdown time{font-size:1.45rem}
   .conversion-points{gap:8px 14px;font-size:.76rem}
-  .campaign-follower{left:10px;right:10px;bottom:10px;width:auto;border-radius:15px;padding:12px 38px 12px 14px;grid-template-columns:1fr auto;gap:10px}
+  .campaign-follower{left:10px;right:10px;bottom:10px;width:auto;border-radius:15px;padding:12px 38px 12px 14px;grid-template-columns:minmax(0,1fr) auto;gap:10px}
   .campaign-follower-kicker{font-size:.59rem;margin-bottom:2px}
   .campaign-follower-price strong{font-size:1.25rem}
-  .campaign-follower-copy small,.campaign-follower-action>span{display:none}
+  .campaign-follower-copy small{display:none}
+  .campaign-follower-action{gap:6px}
+  .campaign-follower-action>span{display:inline-flex;font-size:.6rem;padding:4px 7px}
   .campaign-follower .pill{min-height:36px;padding:7px 11px;font-size:.72rem}
   .campaign-follower-close{right:5px;top:50%;transform:translateY(-50%)}
 }
