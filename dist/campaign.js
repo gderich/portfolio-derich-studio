@@ -25,8 +25,11 @@
   const dialog = document.querySelector('#campaign-dialog');
   const isHome = document.body.classList.contains('home-page');
   const dismissKey = `${campaign.id}:follower-dismissed`;
+  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   let previousState;
   let followerDismissed = false;
+  let followerVisible = false;
+  let morphing = false;
 
   try { followerDismissed = sessionStorage.getItem(dismissKey) === '1'; } catch (_) {}
 
@@ -70,21 +73,113 @@
     follower.querySelector('.campaign-follower-close')?.addEventListener('click', () => {
       followerDismissed = true;
       try { sessionStorage.setItem(dismissKey, '1'); } catch (_) {}
-      updateFollowerVisibility();
+      follower.hidden = true;
+      followerVisible = false;
+      document.body.classList.remove('campaign-follower-visible');
+      if (isEngaged()) notice?.classList.add('campaign-notice-morphed');
     });
   }
 
-  function shouldShowFollower() {
-    if (!active() || followerDismissed || dialog?.open) return false;
+  function isEngaged() {
     return window.scrollY > Math.max(420, window.innerHeight * 0.55);
+  }
+
+  function shouldShowFollower() {
+    return active() && !followerDismissed && !dialog?.open && isEngaged();
+  }
+
+  function noticeRect() {
+    const rect = notice?.getBoundingClientRect();
+    if (rect && rect.width > 0 && rect.height > 0) return rect;
+    const header = document.querySelector('.top')?.getBoundingClientRect();
+    return { left: 0, top: header?.bottom || 0, width: window.innerWidth, height: 44 };
+  }
+
+  function morphOffer(toFollower) {
+    const follower = document.querySelector('[data-campaign-follower]');
+    if (!notice || !follower || morphing || reduceMotion) return false;
+    morphing = true;
+
+    if (toFollower) {
+      follower.hidden = false;
+      follower.style.visibility = 'hidden';
+      notice.classList.remove('campaign-notice-morphed');
+    } else {
+      notice.classList.remove('campaign-notice-morphed');
+      notice.style.visibility = 'hidden';
+    }
+
+    const start = toFollower ? noticeRect() : follower.getBoundingClientRect();
+    const end = toFollower ? follower.getBoundingClientRect() : noticeRect();
+    const ghost = document.createElement('div');
+    ghost.className = 'campaign-morph';
+    ghost.innerHTML = '<span><b>50% OFF</b><small> Site profissional</small></span><strong>R$ 750</strong>';
+    document.body.appendChild(ghost);
+
+    Object.assign(ghost.style, {
+      left: `${start.left}px`, top: `${start.top}px`, width: `${start.width}px`, height: `${start.height}px`
+    });
+
+    const animation = ghost.animate([
+      { left: `${start.left}px`, top: `${start.top}px`, width: `${start.width}px`, height: `${start.height}px`, borderRadius: toFollower ? '0px' : '18px', opacity: .96 },
+      { left: `${end.left}px`, top: `${end.top}px`, width: `${end.width}px`, height: `${end.height}px`, borderRadius: toFollower ? '18px' : '0px', opacity: 1 }
+    ], { duration: 620, easing: 'cubic-bezier(.22,.85,.3,1)', fill: 'forwards' });
+
+    animation.onfinish = () => {
+      ghost.remove();
+      if (toFollower) {
+        notice.classList.add('campaign-notice-morphed');
+        follower.style.visibility = '';
+        follower.hidden = false;
+        followerVisible = true;
+        document.body.classList.add('campaign-follower-visible');
+      } else {
+        follower.hidden = true;
+        follower.style.visibility = '';
+        followerVisible = false;
+        notice.style.visibility = '';
+        notice.classList.remove('campaign-notice-morphed');
+        document.body.classList.remove('campaign-follower-visible');
+      }
+      morphing = false;
+    };
+    animation.oncancel = animation.onfinish;
+    return true;
   }
 
   function updateFollowerVisibility() {
     const follower = document.querySelector('[data-campaign-follower]');
-    if (!follower) return;
+    if (!follower || morphing) return;
+
+    const engaged = isEngaged();
     const show = shouldShowFollower();
-    follower.hidden = !show;
-    document.body.classList.toggle('campaign-follower-visible', show);
+
+    if (engaged) notice?.classList.add('campaign-notice-morphed');
+    else notice?.classList.remove('campaign-notice-morphed');
+
+    if (show && !followerVisible) {
+      if (!morphOffer(true)) {
+        follower.hidden = false;
+        followerVisible = true;
+        document.body.classList.add('campaign-follower-visible');
+      }
+      return;
+    }
+
+    if (!engaged && followerVisible) {
+      if (!morphOffer(false)) {
+        follower.hidden = true;
+        followerVisible = false;
+        document.body.classList.remove('campaign-follower-visible');
+      }
+      return;
+    }
+
+    if (!show && followerVisible && (followerDismissed || dialog?.open || !active())) {
+      follower.hidden = true;
+      followerVisible = false;
+      document.body.classList.remove('campaign-follower-visible');
+    }
   }
 
   function render() {
@@ -151,7 +246,6 @@
   dialog?.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
   dialog?.addEventListener('close', updateFollowerVisibility);
 
-  // Preserve ad attribution from the portfolio to the offer page.
   const source = new URLSearchParams(location.search);
   document.querySelectorAll('a[href^="sites.html"]').forEach(link => {
     const url = new URL(link.href);
