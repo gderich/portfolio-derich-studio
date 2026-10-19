@@ -66,7 +66,7 @@ Só publique com texto real e autorização por escrito da proprietária. Quando
 
 ## Campanha de outubro de 2026
 
-Configuração central em `dist/campaign.js`: preço regular R$ 750; oferta R$ 650; início 14/10/2026 e encerramento absoluto em 19/10/2026 às 00h, UTC-03:00. O aviso e o desconto aparecem apenas dentro desse intervalo; preços e formulário voltam ao valor regular automaticamente. O contador nunca reinicia por visitante. Solicitações devem ser enviadas pelo WhatsApp dentro do prazo; escopo e contratação são confirmados na proposta. Sem JavaScript, permanece o preço regular, sem promessa de desconto. Para outra campanha, altere configuração e textos/datas nos dois HTML; não reutilize prazos vencidos.
+Configuração central em `dist/campaign.js`: preço regular R$ 1.500; oferta R$ 750 (50% OFF); início 19/10/2026 às 14h05 e encerramento absoluto em 26/10/2026 às 14h05, UTC-03:00. O aviso e o desconto aparecem apenas dentro desse intervalo; preços e formulário voltam ao valor regular automaticamente. O contador nunca reinicia por visitante. Solicitações devem ser enviadas pelo WhatsApp dentro do prazo; escopo e contratação são confirmados na proposta. Sem JavaScript, permanece o preço regular, sem promessa de desconto. Para outra campanha, altere configuração e textos/datas nos dois HTML; não reutilize prazos vencidos.
 
 O aviso abre um diálogo apenas ao clicar. A campanha usa CSS/JS locais, preserva a CSP e transporta UTMs da home para a oferta. O formulário recalcula o preço ao enviar, inclusive se a aba ficou aberta após o fim da campanha.
 
