@@ -23,6 +23,7 @@ const message = ['Olá, Derich! Vi a página de sites e quero uma proposta.',
 'Interesse: ' + (form.elements.namedItem('need').selectedIndex === 0 && window.derichOffer ? window.derichOffer.description() : data.get('need')),
 'Origem: Página de oferta' + (campaign ? ' | ' + campaign : '')].join('\n');
 document.getElementById('sale-status').textContent = 'Abrindo o WhatsApp. Revise a mensagem e toque em enviar para iniciar a conversa.';
+window.siteTrack?.('quote_whatsapp_open', { form_name: 'sale_form' });
 location.assign('https://wa.me/' + number + '?text=' + encodeURIComponent(message));
 });
 form.addEventListener('input', event => { if (event.target.setCustomValidity) event.target.setCustomValidity(''); });

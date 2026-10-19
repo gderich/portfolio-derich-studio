@@ -48,6 +48,7 @@
     event.preventDefault();
     const data = new FormData(form);
     const message = `Olá, Derich! Vi seu portfólio e gostaria de conversar sobre um projeto.\n\n*Nome:* ${data.get('name').trim()}\n*Negócio:* ${data.get('business').trim()}\n*Ideia:* ${data.get('idea').trim()}\n*Dificuldade que quero resolver:* ${data.get('challenge').trim()}`;
+window.siteTrack?.('quote_whatsapp_open', { form_name: 'project_brief' });
     window.location.assign(`https://wa.me/${number}?text=${encodeURIComponent(message)}`);
   });
 })();

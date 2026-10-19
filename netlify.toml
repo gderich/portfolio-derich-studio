@@ -1,7 +1,7 @@
 [build]
   publish = "dist"
 
-# Segurança e privacidade: nenhuma origem externa é necessária (fontes, scripts e imagens são locais).
+# Recursos locais e Google Analytics; sem recursos de publicidade.
 [[headers]]
   for = "/*"
   [headers.values]
@@ -9,7 +9,7 @@
     X-Frame-Options = "DENY"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
 
 # Fontes têm nome fixo de versão: cache longo.
 [[headers]]
