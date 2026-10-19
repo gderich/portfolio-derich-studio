@@ -1,14 +1,14 @@
 /* One shared offer: absolute deadline in Brasília, never reset per visit. */
 (() => {
   const campaign = Object.freeze({
-    id: 'sites-outubro-2026', enabled: true,
-    startsAt: '2026-10-14T00:00:00-03:00',
-    endsAt: '2026-10-19T00:00:00-03:00',
+    id: 'sites-outubro-2026-semana-19', enabled: true,
+    startsAt: '2026-10-19T14:05:00-03:00',
+    endsAt: '2026-10-26T14:05:00-03:00',
     regularPrice: 1500, price: 750
   });
   const money = value => new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0}).format(value);
   const active = () => campaign.enabled && Date.now() >= Date.parse(campaign.startsAt) && Date.now() < Date.parse(campaign.endsAt);
-  window.derichOffer = {active, description:()=>active()?`Site de página única: ${money(campaign.price)} (de ${money(campaign.regularPrice)}), campanha até 18/10/2026, horário de Brasília`:`Site de página única: ${money(campaign.regularPrice)}`};
+  window.derichOffer = {active, description:()=>active()?`Site de página única: ${money(campaign.price)} (de ${money(campaign.regularPrice)}), campanha até 26/10/2026 às 14h05, horário de Brasília`:`Site de página única: ${money(campaign.regularPrice)}`};
 
   const notice=document.querySelector('[data-campaign-notice]');
   const dialog=document.querySelector('#campaign-dialog');
@@ -180,7 +180,7 @@
     if(window.innerWidth<=620){
       noticeCopy.innerHTML=`<b>50% OFF</b> · ${money(campaign.price)} <span class="campaign-notice-countdown">· <time data-countdown datetime="${campaign.endsAt}"></time></span>`;
     }else{
-      noticeCopy.innerHTML=`Site profissional com <b>50% OFF</b>: de <s>${money(campaign.regularPrice)}</s> por <b>${money(campaign.price)}</b> até 18/10. <span class="campaign-notice-countdown"><time data-countdown datetime="${campaign.endsAt}"></time></span>`;
+      noticeCopy.innerHTML=`Site profissional com <b>50% OFF</b>: de <s>${money(campaign.regularPrice)}</s> por <b>${money(campaign.price)}</b> até 26/10, às 14h05. <span class="campaign-notice-countdown"><time data-countdown datetime="${campaign.endsAt}"></time></span>`;
     }
   }
 
