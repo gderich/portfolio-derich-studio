@@ -113,3 +113,14 @@ if (gallery && dataNode) {
   sources(items[0]).forEach(preload);
   show(0);
 }
+
+const rail = document.querySelector(".admin-rail");
+if (rail) {
+  function updateEdges() {
+    rail.classList.toggle("more-left", rail.scrollLeft > 1);
+    rail.classList.toggle("more-right", rail.scrollWidth - rail.clientWidth - rail.scrollLeft > 1);
+  }
+  rail.addEventListener("scroll", updateEdges, { passive: true });
+  window.addEventListener("resize", updateEdges);
+  updateEdges();
+}

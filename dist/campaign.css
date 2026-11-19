@@ -6,7 +6,7 @@
 .campaign-notice a{color:#bfd8ff;text-decoration:underline;text-underline-offset:4px;font-weight:700;white-space:nowrap}
 .campaign-notice-countdown{display:inline-flex;align-items:center;margin-left:8px;padding:3px 8px;border:1px solid #a6c9f43a;border-radius:999px;background:#a6c9f412;color:#e7f1ff;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
 
-.campaign-dialog{color:#edf3fb;background:#111c30;border:1px solid #4c6382;border-radius:20px;width:min(540px,calc(100% - 32px));max-height:calc(100dvh - 32px);padding:42px;overflow:auto;box-shadow:0 30px 100px #0007}
+.campaign-dialog{color:#edf3fb;background:#22334d;border:1px solid rgb(197 219 248 / 32%);border-radius:20px;width:min(540px,calc(100% - 32px));max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);padding:42px;overflow:auto;box-shadow:0 30px 100px #0007}
 .campaign-dialog::backdrop{background:#030817bc;backdrop-filter:blur(5px)}
 .campaign-dialog h2{font-size:clamp(1.8rem,6vw,2.5rem);max-width:400px;margin-top:18px}
 .campaign-dialog p{color:#c0cee0;line-height:1.65}
@@ -14,7 +14,7 @@
 .campaign-price{display:flex;align-items:baseline;gap:16px;margin:26px 0 10px}
 .campaign-price strong{font-family:Manrope,sans-serif;font-size:3.3rem;letter-spacing:-.05em}
 .campaign-price del,.price-anchor{color:#bbcbe2;font-size:1rem;font-weight:400}
-.campaign-countdown{border-block:1px solid #354962;padding:16px 0;margin:24px 0}
+.campaign-countdown{border-block:1px solid rgb(197 219 248 / 24%);padding:16px 0;margin:24px 0}
 .campaign-countdown span{display:block;color:#a6c9f4;font-size:13px;margin-bottom:8px}
 .campaign-countdown time{font-size:1.7rem;font-variant-numeric:tabular-nums;letter-spacing:.03em}
 .campaign-dialog .pill{width:100%;background:#a6c9f4;color:#12243a}
